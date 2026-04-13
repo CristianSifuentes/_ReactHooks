@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 const hookRows = [
   {
@@ -50,15 +50,9 @@ function App() {
    * This keeps the function reference stable so memoized children
    * (React.memo) won't re-render unless dependencies truly changed.
    */
-  const handleLog = useCallback(
-    (entry) => {
-      setLogs((prev) => [
-        `${new Date().toLocaleTimeString()} - ${entry}`,
-        ...prev,
-      ].slice(0, 10));
-    },
-    []
-  );
+  const handleLog = useCallback((entry) => {
+    setLogs((prev) => [`${new Date().toLocaleTimeString()} - ${entry}`, ...prev].slice(0, 10));
+  }, []);
 
   /**
    * useEffect => "synchronizer"
@@ -78,9 +72,8 @@ function App() {
     <main className="container">
       <h1>Advanced Hooks: useEffect vs useMemo vs useCallback</h1>
       <p>
-        The difference is what they store and when they run: useEffect syncs with
-        external systems after render, useMemo caches computed values during render,
-        and useCallback caches function identity during render.
+        The difference is what they store and when they run: useEffect syncs with external systems after render,
+        useMemo caches computed values during render, and useCallback caches function identity during render.
       </p>
 
       <section className="card">
@@ -112,11 +105,7 @@ function App() {
           <h2>Live useMemo Example (Value Cache)</h2>
           <label>
             Search title
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Try: pattern 1"
-            />
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Try: pattern 1" />
           </label>
 
           <label>
